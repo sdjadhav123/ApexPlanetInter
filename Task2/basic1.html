@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All-in-One App</title>
+  <style>
+    * { margin: 10; padding: 10; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    
+    body {
+      
+      
+      background: #f5f5f5;
+      line-height: 1.6;
+      background: url("https://i.pinimg.com/originals/74/5a/a5/745aa55f0452ac0ef3b80ec3d9206f4f.jpg");
+       background-size: cover;
+      box-sizing: 100px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2rem;
+      color: #444;
+    }
+
+    section {
+      padding: 50px 20px;
+      max-width: 1000px;
+      margin: auto;
+
+background: rgba(255, 255, 255, 0.9); /* semi-transparent white */
+  border-radius: 12px;
+  background-size: cover;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  padding: 50px 20px;
+  max-width: 1000px;
+  margin: 20px auto;
+    }
+
+    /* ========== TO-DO LIST ========== */
+    #todo {
+      background: #fff;
+      background: url("https://picsum.photos/id/1018/1600/900") no-repeat center center fixed;
+background-size: cover;
+ 
+      max-width: 800px;
+      min-height: 200px;  
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+
+    #todo header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #todo footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .todo-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+   
+   /*.todo-category-tags {
+     color: brown;
+   }*/
+
+    #taskInput {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #a3249f;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 10px 14px;
+      background: #0cb552;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover { background: #2196f3; }
+
+    .category-tags, .filters {
+      text-align: center;
+      margin: 10px 0;
+      color: indianred;
+      border-color: blue;
+    }
+
+    .tag, .filter-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      margin: 5px;
+      border-radius: 20px;
+      background: #eee;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .tag.active, .filter-btn.active {
+      background: #c66b0a;
+      color: #fff;
+    }
+
+    #taskList {
+      list-style: none;
+      margin-top: 15px;
+    }
+
+    #taskList li {
+      background: #fafafa;
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 5px solid #4cafef;
+    }
+
+    #taskList li.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .actions button {
+      margin-left: 5px;
+      padding: 5px 8px;
+      font-size: 0.8rem;
+    }
+
+    #taskCount {
+      margin-top: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* ========== CONTACT FORM ========== */
+    
+     /* Contact Us Box */
+
+    #contact box {
+      height: 100%;
+    }  
+   
+#contact {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  padding: 30px;
+  width: 80%;
+   height: 100%;
+  max-width: 800px;
+  min-height: 10px; 
+  margin: 20px auto;
+
+  /* Centering content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* center horizontally */
+  justify-content: center;/* center vertically */
+  text-align: center;
+  
+}
+
+/* Input fields inside Contact form */
+#contact input,
+#contact textarea {
+  width: 50%;             /* smaller than full box */
+  margin: 5px 0;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  gap: 5px;
+}
+
+/* Button */
+#contact button {
+  width: 50%;
+  padding: 12px;
+  background: #1e90ff;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+    /* ========== GALLERY ========== */
+    #gallery {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 800px;
+      min-height: 200px; 
+       
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .img-box {
+      width: 100%;
+      height: 120px;
+      overflow: hidden;
+      border-radius: 10px;
+      transition: all 0.4s ease;
+    }
+
+    .img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.5s ease;
+    }
+
+    .effect-zoom img:hover { transform: scale(1.2); }
+    .effect-rotate img:hover { transform: rotate(6deg) scale(1.1); }
+    .effect-blur img:hover { filter: blur(3px); }
+    .effect-grayscale img:hover { filter: grayscale(100%); }
+    .effect-brightness img:hover { filter: brightness(1.3); }
+    .effect-flip img:hover { transform: scaleX(-1); }
+    .effect-shadow img:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+
+    <!--Add new here-->
+    #todo {
+  background: url("https://picsum.photos/1200/600?random=9") no-repeat center/cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  padding: 30px;
+  color: white; 
+  background-blend-mode: overlay;
+  background-color: rgba(0,0,0,0.5); 
+}
+
+#contact {
+  background: url("https://picsum.photos/1200/600?random=10") no-repeat center/cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  padding: 30px;
+  background-blend-mode: lighten;
+  background-color: rgba(255,255,255,0.7); 
+}
+
+#gallery {
+  background: url("https://picsum.photos/1200/600?random=11") no-repeat center/cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  padding: 30px;
+  background-blend-mode: soft-light;
+  background-color: rgba(255,255,255,0.6);
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- TO-DO LIST -->
+  <section id="todo">
+    <header><h2>📋 To-Do List</h2></header>
+
+    <div class="todo-container">
+      <input type="text" id="taskInput" placeholder="Enter a task...">
+      <button onclick="addTask()">➕ Add</button>
+    </div>
+
+    <div class="category-tags">
+      <span class="tag category-Work active" onclick="setCategory('Work', this)">💼 Work</span>
+      <span class="tag category-Personal" onclick="primary('Personal', this)">🏠 Personal</span>
+      <span class="tag category-Study" onclick="setCategory('Study', this)">📚 Study</span>
+    </div>
+
+    <div class="filters">
+      <span class="filter-btn active" onclick="setFilter('All', this)">🌐 All</span>
+      <span class="filter-btn " onclick="setFilter('Work', this)">💼 Work</span>
+      <span class="filter-btn" onclick="setFilter('Personal', this)">🏠 Personal</span>
+      <span class="filter-btn active" onclick="setFilter('Study', this)">📚 Study</span>
+      <span class="filter-btn" onclick="setFilter('Completed', this)">✅ Completed</span>
+      <span class="filter-btn" onclick="setFilter('Pending', this)">⌛ Pending</span>
+    </div>
+
+    <ul id="taskList"></ul>
+    <p id="taskCount">0/0 completed</p>
+
+    <footer>✨ Stay productive and manage your day effectively!</footer>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section id="contact">
+    <h2>📞 Contact Us</h2>
+    <!-- <div class="img-box effect-flip"></div>-->
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <input type="tel" placeholder="Your Phone">
+      <textarea rows="3" placeholder="Your Message"></textarea>
+      <button type="submit">Send Message</button>
+ 
+    </form>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <h2>🖼️ Image Gallery</h2>
+    <div class="gallery-grid">
+      <div class="img-box effect-zoom"><img src="https://picsum.photos/300/300?random=1"></div>
+      <div class="img-box effect-rotate"><img src="https://picsum.photos/300/300?random=2"></div>
+      <div class="img-box effect-blur"><img src="https://picsum.photos/300/300?random=3"></div>
+      <div class="img-box effect-grayscale"><img src="https://picsum.photos/300/300?random=4"></div>
+      <div class="img-box effect-brightness"><img src="https://picsum.photos/300/300?random=5"></div>
+      <div class="img-box effect-flip"><img src="https://picsum.photos/300/300?random=6"></div>
+      <div class="img-box effect-shadow"><img src="https://picsum.photos/300/300?random=7"></div>
+      <div class="img-box effect-zoom"><img src="https://picsum.photos/300/300?random=8"></div>
+      <div class="img-box effect-grayscale"><img src="https://picsum.photos/300?random=1"></div>
+      <div class="img-box effect-grayscale"><img src="https://picsum.photos/300?random=2"></div>
+    </div>
+  </section>
+
+  <script>
+    let tasks = [];
+    let currentCategory = "Work";
+    let currentFilter = "All";
+
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      if (taskInput.value.trim() === "") return;
+      tasks.push({ text: taskInput.value, category: currentCategory, completed: false });
+      taskInput.value = "";
+      renderTasks();
+    }
+
+    function setCategory(category, el) {
+      currentCategory = category;
+      document.querySelectorAll(".tag").forEach(tag => tag.classList.remove("active"));
+      el.classList.add("active");
+    }
+
+    function setFilter(filter, el) {
+      currentFilter = filter;
+      document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+      el.classList.add("active");
+      renderTasks();
+    }
+
+    function toggleComplete(index) {
+      tasks[index].completed = !tasks[index].completed;
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      renderTasks();
+    }
+
+    function editTask(index) {
+      const newTask = prompt("Edit task:", tasks[index].text);
+      if (newTask !== null && newTask.trim() !== "") {
+        tasks[index].text = newTask;
+        renderTasks();
+      }
+    }
+
+    function renderTasks() {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+      let completedCount = 0;
+
+      tasks.forEach((task, index) => {
+        if (
+          currentFilter === "All" ||
+          (currentFilter === "Completed" && task.completed) ||
+          (currentFilter === "Pending" && !task.completed) ||
+          currentFilter === task.category
+        ) {
+          const li = document.createElement("li");
+          if (task.completed) li.classList.add("completed");
+
+          li.innerHTML = `
+            <span>${task.text} <small>[${task.category}]</small></span>
+            <div class="actions">
+              <button onclick="toggleComplete(${index})">✔</button>
+              <button onclick="editTask(${index})">✏</button>
+              <button onclick="deleteTask(${index})">🗑</button>
+            </div>
+          `;
+
+          taskList.appendChild(li);
+        }
+        if (task.completed) completedCount++;
+      });
+
+      document.getElementById("taskCount").innerText = 
+        `${completedCount}/${tasks.length} completed`;
+    }
+  </script>
+</body>
+</html>
