@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced CSS + JavaScript</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="style.css">
+   </head>
+  <body>
+  <header>
+    <h1>Advanced CSS + JavaScript</h1>
+    <p>Quiz + Random API + Carousel</p>
+  </header>
+  <nav>
+    <button onclick="scrollToSection('quiz')">Quiz🤔</button>
+      <button onclick="scrollToSection('random')">Random 🫡</button>
+    <button onclick="scrollToSection('carousel')">Carousel 👉</button>
+  </nav>
+  <div class="container">
+    <div id="quiz" class="section">
+      <h2>Quiz App</h2>
+      <div id="quiz-content"></div>
+      <button class="action" onclick="submitQuiz()">Submit</button>
+      <p id="result"></p>
+    </div>
+    <div id="random" class="section">
+      <h2>Random Quote</h2>
+      <div id="random-api"></div>
+    </div>
+    <div id="carousel" class="section">
+      <h2>Image Carousel</h2>
+      <div class="carousel" id="carousel-container">
+        <button class="prev" onclick="prevSlide()">&#10094;</button>
+        <button class="next" onclick="nextSlide()">&#10095;</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  </body>
+</html>
