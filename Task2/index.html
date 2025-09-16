@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Global Styles ===== */
+    body {
+      background: linear-gradient(135deg, #0a1f44, #142850);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #00a8cc;
+      letter-spacing: 1px;
+    }
+
+    /* ===== Container ===== */
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #1e3a5f;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: 600;
+      text-align: left;
+      color: #e0e0e0;
+    }
+
+    select, button {
+      margin-bottom: 15px;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    select {
+      background: #0a1f44;
+      color: #ffffff;
+      outline: none;
+    }
+
+    button {
+      background: #00a8cc;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #0090b3;
+      transform: translateY(-2px);
+    }
+
+    /* ===== Quiz Questions ===== */
+    #quiz {
+      margin-top: 25px;
+    }
+
+    #quiz h3 {
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      line-height: 1.5;
+    }
+
+    .answer {
+      display: block;
+      margin: 8px 0;
+      padding: 12px;
+      width: 100%;
+      background: #23395d;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-align: left;
+    }
+
+    .answer:hover {
+      background: #2e4a72;
+    }
+
+    #timer {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #ffcc00;
+    }
+
+    /* ===== Result Screen ===== */
+    .result {
+      animation: popIn 0.6s ease-in-out;
+    }
+
+    .emoji {
+      font-size: 3rem;
+      margin: 15px 0;
+    }
+
+    .score-text {
+      font-size: 1.4rem;
+      margin: 10px 0;
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes popIn {
+      from {opacity: 0; transform: scale(0.8);}
+      to {opacity: 1; transform: scale(1);}
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Quiz App</h1>
+
+    <label for="numQuestions">Number Of Questions</label>
+    <select id="numQuestions">
+      <option value="5">5</option>
+      <option value="10">10</option>
+    </select>
+
+    <label for="category">Select Category</label>
+    <select id="category">
+      <option value="">Any Category</option>
+      <option value="9">General Knowledge</option>
+      <option value="21">Sports</option>
+    </select>
+
+    <label for="difficulty">Select Difficulty</label>
+    <select id="difficulty">
+      <option value="">Any Difficulty</option>
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+
+    <label for="timeLimit">Select Time Per Question</label>
+    <select id="timeLimit">
+      <option value="10">10 Seconds</option>
+      <option value="20">20 Seconds</option>
+    </select>
+
+    <button onclick="startQuiz()">Start Quiz</button>
+    <div id="quiz"></div>
+  </div>
+
+  <script>
+    async function startQuiz() {
+      const numQuestions = document.getElementById("numQuestions").value;
+      const category = document.getElementById("category").value;
+      const difficulty = document.getElementById("difficulty").value;
+      const timeLimit = parseInt(document.getElementById("timeLimit").value);
+
+      let apiUrl = `https://opentdb.com/api.php?amount=${numQuestions}`;
+      if (category) apiUrl += `&category=${category}`;
+      if (difficulty) apiUrl += `&difficulty=${difficulty}`;
+      apiUrl += `&type=multiple`;
+
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+      const questions = data.results;
+
+      let current = 0;
+      let score = 0;
+      const quizDiv = document.getElementById("quiz");
+
+      function showQuestion() {
+        if (current >= questions.length) {
+          showResults();
+          return;
+        }
+
+        const q = questions[current];
+        const answers = [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5);
+
+        quizDiv.innerHTML = `
+          <h3>${q.question}</h3>
+          ${answers.map(ans => `<button class="answer">${ans}</button>`).join("")}
+          <p id="timer">Time left: ${timeLimit}s</p>
+        `;
+
+        let time = timeLimit;
+        const timer = setInterval(() => {
+          time--;
+          document.getElementById("timer").textContent = `Time left: ${time}s`;
+          if (time <= 0) {
+            clearInterval(timer);
+            current++;
+            showQuestion();
+          }
+        }, 1000);
+
+        document.querySelectorAll(".answer").forEach(btn => {
+          btn.onclick = () => {
+            clearInterval(timer);
+            if (btn.textContent === q.correct_answer) score++;
+            current++;
+            showQuestion();
+          };
+        });
+      }
+
+      function showResults() {
+        const percentage = Math.round((score / questions.length) * 100);
+        let emoji = "🙂";
+        if (percentage === 100) emoji = "🏆";
+        else if (percentage >= 70) emoji = "🎉";
+        else if (percentage >= 40) emoji = "👍";
+        else emoji = "😢";
+
+        quizDiv.innerHTML = `
+          <div class="result">
+            <div class="emoji">${emoji}</div>
+            <h2>Quiz Finished!</h2>
+            <p class="score-text">Your Score: ${score}/${questions.length}</p>
+            <p class="score-text">Percentage: ${percentage}%</p>
+            <button onclick="startQuiz()">Play Again 🔄</button>
+          </div>
+        `;
+      }
+
+      showQuestion();
+    }
+  </script>
+</body>
+</html>

@@ -2,31 +2,122 @@ function scrollToSection(id){
     document.getElementById(id).scrollIntoView({behavior:"smooth"});
   }
 
-  /* Quiz */
-  const quizData=[
-    {question:"Which language is used for styling web pages?",options:["HTML","CSS","Python"],answer:"CSS"},
-    {question:"Which company developed JavaScript?",options:["Google","Netscape","Microsoft"],answer:"Netscape"},
-    {question:"What does API stand for?",options:["Application Programming Interface","Applied Program Internet","Advanced Protocol Integration"],answer:"Application Programming Interface"}
+  /* QUIZ LOGIC (from second code) */
+  const allQuestions = [
+    { question: "Find the odd one out: 2, 6, 12, 20, 30, 42", options: ["12", "20", "30"], answer: "20" },
+    { question: "Capital of France?", options: ["Berlin","Paris","Rome"], answer: "Paris" },
+    { question: "Which language runs in a browser?", options: ["Java","C","JavaScript"], answer: "JavaScript" },
+    { question: "HTML stands for?", options: ["Hyper Text Markup Language","High Tech Modern Language","None"], answer: "Hyper Text Markup Language" },
+    { question: "CSS is used for?", options: ["Styling","Logic","Database"], answer: "Styling" },
+    { question: "Who developed C language?", options: ["Bjarne Stroustrup","Dennis Ritchie","James Gosling"], answer: "Dennis Ritchie" },
+    { question: "Which is not a programming language?", options: ["Python","HTML","C++"], answer: "HTML" },
+    { question: "Which company developed Java?", options: ["Sun Microsystems","Microsoft{ question:","Apple"], answer: "Sun Microsystems" },
+     { question: "Which company owns the Android operating system?", options: ["Apple", "Google", "Microsoft"], answer: "Google" },
+    { question: "Which year was JavaScript created?", options: ["1995","2000","1990"], answer: "1995" }
   ];
-  let quizContainer=document.getElementById("quiz-content");
-  quizData.forEach((q,i)=>{
-    let qBlock=`<div class="quiz-question"><h4>${q.question}</h4>`;
-    q.options.forEach(opt=>{
-      qBlock+=`<label><input type="radio" name="q${i}" value="${opt}"> ${opt}</label>`;
-    });
-    qBlock+=`</div>`;
-    quizContainer.innerHTML+=qBlock;
-  });
-  function submitQuiz(){
-    let score=0;
-    quizData.forEach((q,i)=>{
-      let selected=document.querySelector(`input[name="q${i}"]:checked`);
-      if(selected&&selected.value===q.answer)score++;
-    });
-    document.getElementById("result").innerText=`You scored ${score}/${quizData.length}`;
+
+  let selectedQuestions = [];
+  let currentQuestionIndex = 0;
+  let userAnswers = {};
+
+  function startQuiz() {
+    const numQuestions = parseInt(document.getElementById("num-questions").value);
+    let shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+    selectedQuestions = shuffled.slice(0, numQuestions);
+
+    currentQuestionIndex = 0;
+    userAnswers = {};
+
+    document.getElementById("setup-screen").classList.add("hidden");
+    document.getElementById("quiz-screen").classList.remove("hidden");
+    document.getElementById("result").textContent = "";
+    document.getElementById("restart-btn").classList.add("hidden");
+    document.querySelector(".btn-container").style.display = "block";
+
+    showQuestion();
   }
 
-  /* Random API */
+  function showQuestion() {
+    const q = selectedQuestions[currentQuestionIndex];
+    document.getElementById("question-title").textContent =
+      `Question ${currentQuestionIndex + 1} of ${selectedQuestions.length}`;
+
+    let qBox = document.getElementById("question-box");
+    qBox.innerHTML = `<p>${q.question}</p>`;
+
+    q.options.forEach(opt => {
+      let checked = userAnswers[currentQuestionIndex] === opt ? "checked" : "";
+      qBox.innerHTML += `<label><input type="radio" name="q${currentQuestionIndex}" value="${opt}" ${checked}> ${opt}</label><br>`;
+    });
+
+    document.getElementById("prev-btn").style.display =
+      currentQuestionIndex === 0 ? "none" : "inline-block";
+    document.getElementById("next-btn").style.display =
+      currentQuestionIndex === selectedQuestions.length - 1 ? "none" : "inline-block";
+    document.getElementById("submit-btn").classList.toggle("hidden", currentQuestionIndex !== selectedQuestions.length - 1);
+
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const progress = (currentQuestionIndex / selectedQuestions.length) * 100;
+    document.getElementById("progress-bar").style.width = progress + "%";
+  }
+
+  function nextQuestion() {
+    saveAnswer();
+    if (currentQuestionIndex < selectedQuestions.length - 1) {
+      currentQuestionIndex++;
+      showQuestion();
+    }
+  }
+
+  function prevQuestion() {
+    saveAnswer();
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      showQuestion();
+    }
+  }
+
+  function saveAnswer() {
+    const selected = document.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
+    if (selected) {
+      userAnswers[currentQuestionIndex] = selected.value;
+    }
+  }
+
+  function submitQuiz() {
+    saveAnswer();
+    let score = 0;
+    let output = "";
+
+    selectedQuestions.forEach((q, index) => {
+      let userAns = userAnswers[index] || "No Answer";
+      let cssClass = userAns === q.answer ? "correct" : "wrong";
+      if (userAns === q.answer) score++;
+
+      output += `<div class="question-box ${cssClass}">
+        <p><strong>Q${index + 1}:</strong> ${q.question}</p>
+        <p>✅ Correct Answer: <b>${q.answer}</b></p>
+        <p>📝 Your Answer: <b>${userAns}</b></p>
+      </div>`;
+    });
+
+    document.getElementById("question-box").innerHTML = output;
+    document.getElementById("question-title").textContent = "Quiz Finished 🎉";
+    document.getElementById("result").textContent = `✅ You scored ${score} / ${selectedQuestions.length}`;
+    document.querySelector(".btn-container").style.display = "none";
+    document.getElementById("restart-btn").classList.remove("hidden");
+    document.getElementById("progress-bar").style.width = "100%";
+  }
+
+  function restartQuiz() {
+    document.getElementById("quiz-screen").classList.add("hidden");
+    document.getElementById("setup-screen").classList.remove("hidden");
+  }
+
+  /* RANDOM API */
   const randomDiv=document.getElementById('random-api');
   function fetchData(){
     fetch("https://dummyjson.com/quotes/random")
@@ -37,7 +128,7 @@ function scrollToSection(id){
   }
   fetchData();
 
-  /* Carousel */
+  /* CAROUSEL */
   let currentSlide=0;let slides=[];
   function loadCarouselImages(count=5){
     const container=document.getElementById("carousel-container");
