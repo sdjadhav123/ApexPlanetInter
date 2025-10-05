@@ -1,0 +1,99 @@
+* {
+   margin: 0%;
+   padding: 0%;
+   font-family: 'Roboto', sans-serif;
+
+}
+
+body{
+    background-color: #eee;
+
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    background-color: #eeee;
+    padding: 22px;
+    box-shadow: 0px 2px 2px 2px rgb(162, 162, 162);
+}
+nav .logo{
+   margin-left: 22px;
+   font-size: 24px; 
+}
+
+ul{
+    margin-right: 45px;
+    margin-top: 7px;
+}
+nav ul li{
+    list-style: none;
+}
+ul li a{
+    margin-inline: 22px;
+    font-size: 20px;
+}
+ul li i{
+    font-size: 22px;
+}
+ul li #home{
+    color: rgb(5, 167, 167);
+}
+ul li a:hover{
+    border-bottom: 2px solid black;
+    cursor: pointer;
+}
+ul li i:hover{
+    color: gray;
+    cursor: pointer;
+}
+.main{
+    display: flex;
+    justify-content: space-around;
+}
+.main .mainText{
+    margin-top: 144px;
+}
+.mainText h1{
+    font-size: 64px;
+}
+.mainText button{
+    width: 145px;
+    height: 40px;
+    background-color: rgb(4, 140, 140);
+    border: none;
+    font-size: 22px;
+    color: white;
+    margin-top: 24px;
+}
+.mainText p{
+    margin-top: 12px;
+}
+.mainText button:hover{
+    border: 2px solid rgb(3, 128, 128);
+    background-color: transparent;
+    color: rgb(2, 121, 121);
+}
+
+.trend .head h1{
+    text-align: center;
+    padding: 33px;
+    margin-top: 32px;
+}
+.head span{
+    color: rgb(2, 164, 164);
+}
+.card{
+    display: flex;
+    justify-content: center;
+}
+.card .crd{
+   width: 300px;
+   height: 500px;
+   background-color: #fff;
+   margin-inline: 11px;
+
+}
+.crd img{
+    
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlowStore - Unique E-Commerce</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+/* Reset */
+* {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
+body {background:#0d0d0d; color:#fff; overflow-x:hidden;}
+
+/* Navbar */
+nav {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 50px; background:rgba(0,0,0,0.8); position:sticky; top:0; z-index:1000;
+}
+nav .logo {font-size:1.8em; color:#ff6ec7; font-weight:bold;}
+nav ul {display:flex; list-style:none; gap:25px;}
+nav ul li a {color:#fff; text-decoration:none; transition:0.3s;}
+nav ul li a:hover {color:#ff6ec7;}
+nav .cart {font-size:1.5em; color:#ff6ec7; cursor:pointer;}
+
+/* Hero Section */
+.hero {
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    height:100vh; text-align:center; background:linear-gradient(135deg,#ff416c,#ff6ec7);
+    position:relative; overflow:hidden;
+}
+.hero h1 {font-size:3em; margin-bottom:20px; color:#fff;}
+.hero h2 {font-size:2em; margin-bottom:10px; color:#fff;}
+.hero .typing {border-right:2px solid #fff; padding-right:5px; font-weight:bold;}
+.hero button {padding:15px 40px; font-size:1em; border:none; border-radius:50px; background:#fff; color:#ff416c; cursor:pointer; transition:0.3s;}
+.hero button:hover {background:#ff416c; color:#fff;}
+
+/* Floating Product Cards */
+.products {display:flex; flex-wrap:wrap; justify-content:center; gap:30px; padding:80px 20px;}
+.card {
+    background:linear-gradient(145deg,#1a1a1a,#333);
+    width:250px; height:350px; border-radius:20px; overflow:hidden;
+    box-shadow:0 10px 20px rgba(0,0,0,0.5); transition:0.5s; transform-style:preserve-3d;
+}
+.card img {width:100%; height:200px; object-fit:cover; transition:0.5s;}
+.card-content {padding:20px; text-align:center;}
+.card-content h3 {margin-bottom:10px;}
+.card-content p {font-size:0.9em; color:#ccc; margin-bottom:15px;}
+.card-content button {padding:10px 25px; border:none; border-radius:50px; background:#ff416c; color:#fff; cursor:pointer; transition:0.3s;}
+.card-content button:hover {background:#ff6ec7;}
+.card:hover {transform:rotateY(15deg) scale(1.05);}
+.card:hover img {transform:scale(1.1);}
+
+/* Footer */
+footer {background:#111; color:#aaa; padding:40px 20px; text-align:center;}
+footer h3 {color:#ff6ec7; margin-bottom:10px;}
+footer p {margin-bottom:15px; font-size:0.9em;}
+footer .socials i {font-size:1.3em; margin:0 10px; cursor:pointer; transition:0.3s;}
+footer .socials i:hover {color:#ff416c;}
+
+/* Responsive */
+@media(max-width:768px){
+    nav {flex-direction:column; gap:15px;}
+    .hero h1{font-size:2.2em;} .hero h2{font-size:1.5em;}
+    .products{flex-direction:column; align-items:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <div class="logo">GlowStore</div>
+    <ul>
+        <li><a>Home</a></li>
+        <li><a>Products</a></li>
+        <li><a>About</a></li>
+        <li><a>Contact</a></li>
+    </ul>
+    <div class="cart"><i class="fa-sharp fa-solid fa-cart-shopping"></i></div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <h1>Welcome to GlowStore</h1>
+    <h2>Get Your <span class="typing"></span></h2>
+    <button>Shop Now</button>
+</section>
+
+<!-- Products -->
+<section class="products">
+    <div class="card">
+        <img src="https://source.unsplash.com/300x200/?fashion,hoodie" alt="Hoodie">
+        <div class="card-content">
+            <h3>Cosmic Hoodie</h3>
+            <p>Glow in style with this trendy hoodie.</p>
+            <button>Add to Cart</button>
+        </div>
+    </div>
+    <div class="card">
+        <img src="https://source.unsplash.com/300x200/?fashion,sneakers" alt="Sneakers">
+        <div class="card-content">
+            <h3>Neon Sneakers</h3>
+            <p>Step out bold with these neon kicks.</p>
+            <button>Add to Cart</button>
+        </div>
+    </div>
+    <div class="card">
+        <img src="https://source.unsplash.com/300x200/?fashion,jacket" alt="Jacket">
+        <div class="card-content">
+            <h3>Galaxy Jacket</h3>
+            <p>Keep warm and stylish under the stars.</p>
+            <button>Add to Cart</button>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <h3>GlowStore</h3>
+    <p>Shining fashion, every day. Follow us on social media!</p>
+    <div class="socials">
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-instagram"></i>
+    </div>
+    <p>&copy; 2025 GlowStore. All rights reserved.</p>
+</footer>
+
+<!-- JS -->
+<script>
+// Typing animation
+const words = ["Neon Style", "Cosmic Fashion", "Galaxy Vibes"];
+let i=0, j=0;
+const typingEl = document.querySelector('.typing');
+
+function type(){
+    if(i<words.length){
+        let word = words[i];
+        typingEl.textContent = word.slice(0,j+1);
+        j++;
+        if(j === word.length){ setTimeout(()=>{ j=0; i=(i+1)%words.length; typingEl.textContent=""; }, 1500);}
+        setTimeout(type, 150);
+    }
+}
+type();
+
+// Add to cart alert
+document.querySelectorAll('.card-content button').forEach(btn=>{
+    btn.addEventListener('click',()=>alert("Added to cart!"));
+});
+</script>
+
+</body>
+</html>
+
+
